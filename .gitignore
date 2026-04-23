@@ -1,0 +1,22 @@
+# Node
+my-app/node_modules/
+my-app/.vite/
+my-app/out/
+my-app/dist/
+
+# Python
+my-app/backend/venv/
+my-app/backend/__pycache__/
+my-app/backend/dist/
+my-app/backend/build/
+my-app/backend/*.spec.bak
+__pycache__/
+*.pyc
+*.pyo
+
+# Build artifacts
+my-app/resources/backend
+
+# OS
+.DS_Store
+Thumbs.db

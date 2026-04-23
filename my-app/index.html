@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enrichment Ratio Calculator</title>
+    <link rel="stylesheet" href="/src/index.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Header -->
+      <header class="app-header">
+        <div class="header-content">
+          <div class="logo-section">
+            <div class="logo-icon">🧬</div>
+            <div class="logo-text">
+              <h1>Enrichment Ratio Calculator</h1>
+              <p class="subtitle">Sequence Frequency Enrichment Analysis</p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Input Section -->
+        <section class="input-section">
+          <div class="section-header">
+            <h2>📁 File Input</h2>
+            <p class="section-description">Select the reference file and up to 3 comparison files</p>
+          </div>
+          
+          <div class="file-input-container">
+            <div class="file-input-group">
+              <label for="file1-input" class="file-label">Reference file</label>
+              <div class="file-input-wrapper">
+                <input 
+                  type="text" 
+                  id="file1-input" 
+                  class="file-path-input" 
+                  placeholder="Enter file path or browse..."
+                  readonly
+                />
+                <button class="btn-browse" id="browse-file1">Browse</button>
+                <input 
+                  type="file" 
+                  id="file1-file-input" 
+                  class="file-input-hidden" 
+                  accept=".csv,.tsv,.txt,.xlsx"
+                />
+              </div>
+              <div class="file-info" id="file1-info"></div>
+            </div>
+
+            <div class="file-input-group">
+              <label for="file2-input" class="file-label">Comparison file 1</label>
+              <div class="file-input-wrapper">
+                <input 
+                  type="text" 
+                  id="file2-input" 
+                  class="file-path-input" 
+                  placeholder="Enter file path or browse..."
+                  readonly
+                />
+                <button class="btn-browse" id="browse-file2">Browse</button>
+                <input 
+                  type="file" 
+                  id="file2-file-input" 
+                  class="file-input-hidden" 
+                  accept=".csv,.tsv,.txt,.xlsx"
+                />
+              </div>
+              <div class="file-info" id="file2-info"></div>
+            </div>
+
+            <div class="file-input-group">
+              <label for="file3-input" class="file-label">Comparison file 2 (optional)</label>
+              <div class="file-input-wrapper">
+                <input 
+                  type="text" 
+                  id="file3-input" 
+                  class="file-path-input" 
+                  placeholder="Enter file path or browse..."
+                  readonly
+                />
+                <button class="btn-browse" id="browse-file3">Browse</button>
+                <input 
+                  type="file" 
+                  id="file3-file-input" 
+                  class="file-input-hidden" 
+                  accept=".csv,.tsv,.txt,.xlsx"
+                />
+              </div>
+              <div class="file-info" id="file3-info"></div>
+            </div>
+
+            <div class="file-input-group">
+              <label for="file4-input" class="file-label">Comparison file 3 (optional)</label>
+              <div class="file-input-wrapper">
+                <input 
+                  type="text" 
+                  id="file4-input" 
+                  class="file-path-input" 
+                  placeholder="Enter file path or browse..."
+                  readonly
+                />
+                <button class="btn-browse" id="browse-file4">Browse</button>
+                <input 
+                  type="file" 
+                  id="file4-file-input" 
+                  class="file-input-hidden" 
+                  accept=".csv,.tsv,.txt,.xlsx"
+                />
+              </div>
+              <div class="file-info" id="file4-info"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Analysis Configuration -->
+        <section class="configuration-section">
+          <div class="section-header">
+            <h2>⚙️ Analysis Configuration</h2>
+            <p class="section-description">Configure sequence selection and comparison parameters</p>
+          </div>
+
+          <!-- Chain Selection -->
+          <div class="config-group">
+            <label class="config-label">Chain Selection</label>
+            <p class="config-hint">Select which chain columns to use for the analysis</p>
+            <div class="radio-group">
+              <label class="radio-label">
+                <input 
+                  type="radio" 
+                  name="chain-selection" 
+                  value="heavy" 
+                  id="chain-heavy"
+                  checked
+                />
+                <span class="radio-custom"></span>
+                <span class="radio-text">Heavy</span>
+              </label>
+              <label class="radio-label">
+                <input 
+                  type="radio" 
+                  name="chain-selection" 
+                  value="light" 
+                  id="chain-light"
+                />
+                <span class="radio-custom"></span>
+                <span class="radio-text">Light</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Sequence Type Selection -->
+          <div class="config-group">
+            <label for="sequence-type" class="config-label">Sequence Comparison Value (clustering column)</label>
+            <p class="config-hint">Label for the output CSV only. Enrichment is always calculated using the file’s <strong>Sequence</strong> column.</p>
+            <select id="sequence-type" class="form-select">
+              <option value="total_nucleotide_sequence_identity" selected>% Total nucleotide sequence identity</option>
+              <option value="total_nucleotide_differences">Total nucleotide differences</option>
+              <option value="cdr3_nucleotide_identity">% CDR3 nucleotide identity</option>
+              <option value="cdr_nucleotide_identity">% CDR nucleotide identity</option>
+              <option value="amino_acid_identity">% Amino Acid Identity</option>
+              <option value="total_amino_acid_differences">Total Amino Acid differences</option>
+            </select>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="action-buttons">
+            <button class="btn btn-primary" id="run-analysis">
+              <span class="btn-icon">▶</span>
+              Calculate Enrichment Ratios
+            </button>
+            <button class="btn btn-secondary" id="reset-config">Reset Configuration</button>
+          </div>
+        </section>
+
+        <!-- Results Section -->
+        <section class="results-section">
+          <div class="section-header">
+            <h2>📊 Enrichment Results</h2>
+            <div class="results-controls">
+              <button class="btn-icon" id="export-results" title="Export Results">💾</button>
+              <button class="btn-icon" id="export-unfound" title="Export unfound sequences">📄</button>
+              <button class="btn-icon" id="refresh-results" title="Refresh">🔄</button>
+            </div>
+          </div>
+
+          <div class="results-container">
+            <div class="results-placeholder">
+              <div class="placeholder-icon">📊</div>
+              <p class="placeholder-text">Run an analysis to view enrichment ratios</p>
+              <p class="placeholder-hint">The enrichment ratio shows how frequently each sequence appears in comparison files vs the reference file</p>
+            </div>
+
+            <div class="results-content hidden" id="results-content">
+              <!-- Analysis Summary -->
+              <div class="analysis-summary" id="analysis-summary">
+                <div class="summary-item">
+                  <span class="summary-label">Reference:</span>
+                  <span class="summary-value" id="summary-file1">-</span>
+                </div>
+                <div class="summary-item">
+                  <span class="summary-label">Comparison files:</span>
+                  <span class="summary-value" id="summary-file2">-</span>
+                </div>
+                <div class="summary-item">
+                  <span class="summary-label">Chain:</span>
+                  <span class="summary-value" id="summary-chain">-</span>
+                </div>
+                <div class="summary-item">
+                  <span class="summary-label">Sequence Type:</span>
+                  <span class="summary-value" id="summary-sequence">-</span>
+                </div>
+                <div class="summary-item">
+                  <span class="summary-label">Total Sequences:</span>
+                  <span class="summary-value" id="summary-total">-</span>
+                </div>
+                <div class="summary-item">
+                  <span class="summary-label">Output File:</span>
+                  <span class="summary-value" id="summary-output">-</span>
+                </div>
+              </div>
+
+              <!-- Results Table -->
+              <div class="table-container-wrapper">
+                <div class="table-header-info">
+                  <p class="table-description">
+                    Each comparison file has an <strong>enrichment_ratio</strong> column = (Frequency in that file) / (Frequency in reference). Top 10 shown; export saves all results to CSV.
+                  </p>
+                  <p class="table-note">Sequences not found in reference are marked as "n.f." (not found)</p>
+                </div>
+                <div class="table-container">
+                  <table class="results-table">
+                    <thead>
+                      <tr>
+                        <!-- Headers filled from result (Sequence (reference), Frequency (reference), ..., enrichment_ratio file1, file2, file3) -->
+                      </tr>
+                    </thead>
+                    <tbody id="results-table-body">
+                      <!-- Results will be populated here -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Status Messages -->
+              <div class="status-messages" id="status-messages"></div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- Footer -->
+      <footer class="app-footer">
+        <p>Enrichment Ratio Calculator v1.0.0 | Powered by FastAPI Backend</p>
+      </footer>
+    </div>
+
+    <script type="module" src="/src/renderer.js"></script>
+  </body>
+</html>
