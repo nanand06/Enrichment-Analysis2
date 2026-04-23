@@ -1,0 +1,39 @@
+Things to change: 
+
+- file1 -> becomes a reference file 
+
+- file2 ... file3 ... and so are on are comparison files that are compared to file1 for 
+calculating the enrichment ratios. 
+
+- 1 reference file 3 comparison files(max)
+	- if less than three those compare to reference
+- get rid of linked selection option
+
+- change comparison values just to match the clustering
+-
+- if the comparison value does not exist withing the inpu file/reference, output some error. 
+
+
+- output top 10, sort by DESC enrichment, and output all the results to a csv
+	- the csv header should ctoaning the comparison values in the clustering, that's all they are meant for
+	to be appended to the output csv header
+
+
+- if given 3 comparison files -> output to a final single combined file 
+
+output file format: 
+
+Col1: Sequence in reference file 
+Col2: frequency
+Col3: Sequence in comparison file 1
+Col4: frequency
+Col5: Sequence un comparison file 2 (if given)
+Col6: frequency
+Column: enrichment ratio 1
+Column: enrichment ratio 2
+Column: enrichment ratio 3
+
+- contains other data from clustering corresponding to the sequence
+
+- Handle case where there is a sequence in a late comparison file but not in the reference. 
+	- For each comparison Orignal sequencing information forn clustering file: ile put the sequneces in "not found sequences" 
